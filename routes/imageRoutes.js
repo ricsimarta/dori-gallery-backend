@@ -8,4 +8,6 @@ router.get('/ids', imageController.getAllImageIds)
 
 router.post('/new-image', imageController.addNewImage)
 
+router.delete('/id/:id', imageController.deleteImageById)
+
 module.exports = router
