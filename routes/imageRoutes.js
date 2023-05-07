@@ -4,7 +4,7 @@ const imageController = require('./../controllers/imageController')
 
 router.get('/', imageController.getAllImages)
 router.get('/id/:id', imageController.getImageById)
-router.get('/ids', imageController.getAllImageIds)
+router.get('/id', imageController.getAllImageIds)
 
 router.post('/new-image', imageController.addNewImage)
 

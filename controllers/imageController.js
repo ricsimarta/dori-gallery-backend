@@ -50,8 +50,6 @@ module.exports.addNewImage = async (req, res) => {
     const extension = uploadedImageName.substring(uploadedImageName.indexOf('.'))
     const imageName = uuidv4() + extension
 
-    console.log(req.body.name)
-
     bucket.file(`images/${imageName}`).save(req.files.image.data)
       .then(() => {
         console.log('uploaded: ', imageName)
@@ -72,6 +70,7 @@ module.exports.addNewImage = async (req, res) => {
               const newDoc = {
                 id: sortedImages.length > 0 ? sortedImages[sortedImages.length - 1].id + 1 : 1,
                 name: req.body.name,
+                fileName: imageName,
                 url: imageLink,
                 date: `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}:${now.getMilliseconds()}`
               }
@@ -108,11 +107,19 @@ module.exports.deleteImageById = async (req, res) => {
     const imageRef = await gallery.where('id', '==', imageId).get()
 
     imageRef.forEach(image => {
-      image.ref.delete()
-      console.log('deleted:', imageId)
-    })
+      const fileName = image.data().fileName
 
-    res.json(`deleted id: ${imageId}`)
+      bucket.file(`images/${fileName}`).delete()
+        .then(() => {
+          image.ref.delete()
+          console.log('deleted: ', imageId)
+          res.json(`deleted: ${imageId}`)
+        })
+        .catch(err => {
+          console.log(err)
+          res.send(err)
+        })
+    })
   } catch (err) {
     res.send(err)
   }
