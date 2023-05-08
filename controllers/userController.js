@@ -130,7 +130,6 @@ module.exports.getAllUsers = async (req, res) => {
             let done = 0;
 
             userRecords.forEach((user, index, array) => {
-              console.log(user)
               users.where('uid', '==', user.uid).get()
                 .then(docs => {
                   const docsData = []
