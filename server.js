@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const fileUpload = require('express-fileupload')
+const cors = require('cors')
 
 const app = express()
 
@@ -9,6 +10,7 @@ const imageRoutes = require('./routes/imageRoutes')
 const userRoutes = require('./routes/userRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 
+app.use(cors())
 app.use(express.json())
 app.use(fileUpload())
 
