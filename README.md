@@ -1,4 +1,4 @@
-### The source code of the backend server I am working on, for a hobby project called Dori-gallery ###
+# The source code of the backend server I am working on, for a hobby project called Dori-gallery #
 
 **This project is under development**
 
